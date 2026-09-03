@@ -7,7 +7,7 @@ interface ProductsPageProps {
   onCheckout: () => void;
 }
 
-export const ProductsPage = ({ onCheckout }: ProductsPageProps) => {
+export const ProductsPage = ({}: ProductsPageProps) => {
   const { data, isLoading, isError, error, refetch } = useProducts();
 
   const products = data?.products ?? [];
@@ -93,7 +93,7 @@ export const ProductsPage = ({ onCheckout }: ProductsPageProps) => {
             Browse our collection and add your favourites to the cart.
           </p>
         </div>
-{/* 
+        {/* 
         <button
           type="button"
           onClick={onCheckout}

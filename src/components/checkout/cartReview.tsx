@@ -10,10 +10,7 @@ export const CartReview = ({
 }: CartReviewProps) => {
   return (
     <div className="space-y-6">
-      {/* Cart items */}
       <CartList />
-
-      {/* Price summary */}
       <CartSummary onCheckout={onNext} />
     </div>
   )

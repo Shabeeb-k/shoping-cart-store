@@ -1,55 +1,39 @@
-import { useState } from 'react'
+import { useState } from "react";
 
-import { CartReview } from '../components/checkout/cartReview'
-import { CheckoutStepper } from '../components/checkout/checkoutStepper'
-import { PaymentSummary } from '../components/checkout/paymentSummary'
-import { ShippingForm } from '../components/checkout/shippingForm'
+import { CartReview } from "../components/checkout/cartReview";
+import { CheckoutStepper } from "../components/checkout/checkoutStepper";
+import { PaymentSummary } from "../components/checkout/paymentSummary";
+import { ShippingForm } from "../components/checkout/shippingForm";
 
-import type { ShippingFormValues } from '../schemas/shippingSchemas'
-import type { CheckoutStep } from '../types/checkout'
+import type { ShippingFormValues } from "../schemas/shippingSchemas";
+import type { CheckoutStep } from "../types/checkout";
 
-import { useCartStore } from '../store/cartStore'
+import { useCartStore } from "../store/cartStore";
 
 interface CheckoutPageProps {
-  onBackToProducts: () => void
+  onBackToProducts: () => void;
 }
 
 const initialShippingData: ShippingFormValues = {
-  fullName: '',
-  email: '',
-  phone: '',
-  address: '',
-  city: '',
-  postalCode: '',
-}
+  fullName: "",
+  email: "",
+  phone: "",
+  address: "",
+  city: "",
+  postalCode: "",
+};
 
-export const CheckoutPage = ({
-  onBackToProducts,
-}: CheckoutPageProps) => {
-  const [step, setStep] =
-    useState<CheckoutStep>(1)
+export const CheckoutPage = ({ onBackToProducts }: CheckoutPageProps) => {
+  const [step, setStep] = useState<CheckoutStep>(1);
 
   const [shippingData, setShippingData] =
-    useState<ShippingFormValues>(
-      initialShippingData,
-    )
+    useState<ShippingFormValues>(initialShippingData);
 
-  const [orderPlaced, setOrderPlaced] =
-    useState(false)
+  const [orderPlaced, setOrderPlaced] = useState(false);
 
-  const items = useCartStore(
-    (state) => state.items,
-  )
+  const items = useCartStore((state) => state.items);
 
-  const clearCart = useCartStore(
-    (state) => state.clearCart,
-  )
-
-  /*
-   * --------------------------------------------------
-   * ORDER SUCCESS
-   * --------------------------------------------------
-   */
+  const clearCart = useCartStore((state) => state.clearCart);
 
   if (orderPlaced) {
     return (
@@ -64,8 +48,8 @@ export const CheckoutPage = ({
           </h1>
 
           <p className="mt-3 text-slate-500">
-            Thank you for your purchase. Your order
-            has been successfully placed.
+            Thank you for your purchase. Your order has been successfully
+            placed.
           </p>
 
           <button
@@ -77,15 +61,8 @@ export const CheckoutPage = ({
           </button>
         </div>
       </main>
-    )
+    );
   }
-
-  /*
-   * --------------------------------------------------
-   * EMPTY CART
-   * --------------------------------------------------
-   */
-
   if (items.length === 0) {
     return (
       <main className="mx-auto flex min-h-[70vh] max-w-2xl items-center justify-center px-4 py-12">
@@ -97,8 +74,7 @@ export const CheckoutPage = ({
           </h1>
 
           <p className="mt-2 text-slate-500">
-            Add products before proceeding to
-            checkout.
+            Add products before proceeding to checkout.
           </p>
 
           <button
@@ -110,29 +86,16 @@ export const CheckoutPage = ({
           </button>
         </div>
       </main>
-    )
+    );
   }
-
-  /*
-   * --------------------------------------------------
-   * PLACE ORDER
-   * --------------------------------------------------
-   */
 
   const handlePlaceOrder = () => {
-    clearCart()
-    setOrderPlaced(true)
-  }
-
-  /*
-   * --------------------------------------------------
-   * CHECKOUT
-   * --------------------------------------------------
-   */
+    clearCart();
+    setOrderPlaced(true);
+  };
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
-      {/* Header */}
       <div className="mb-6">
         <button
           type="button"
@@ -142,56 +105,41 @@ export const CheckoutPage = ({
           ← Continue shopping
         </button>
 
-        <h1 className="mt-3 text-3xl font-bold text-slate-900">
-          Checkout
-        </h1>
+        <h1 className="mt-3 text-3xl font-bold text-slate-900">Checkout</h1>
       </div>
 
-      {/* Step indicator */}
       <CheckoutStepper currentStep={step} />
-
-      {/* --------------------------------------------- */}
-      {/* STEP 1 - CART REVIEW                          */}
-      {/* --------------------------------------------- */}
 
       {step === 1 && (
         <CartReview
           onNext={() => {
-            setStep(2)
+            setStep(2);
           }}
         />
       )}
-
-      {/* --------------------------------------------- */}
-      {/* STEP 2 - SHIPPING                             */}
-      {/* --------------------------------------------- */}
 
       {step === 2 && (
         <ShippingForm
           initialValues={shippingData}
           onBack={() => {
-            setStep(1)
+            setStep(1);
           }}
           onSubmit={(data) => {
-            setShippingData(data)
-            setStep(3)
+            setShippingData(data);
+            setStep(3);
           }}
         />
       )}
-
-      {/* --------------------------------------------- */}
-      {/* STEP 3 - PAYMENT SUMMARY                     */}
-      {/* --------------------------------------------- */}
 
       {step === 3 && (
         <PaymentSummary
           shippingData={shippingData}
           onBack={() => {
-            setStep(2)
+            setStep(2);
           }}
           onPlaceOrder={handlePlaceOrder}
         />
       )}
     </main>
-  )
-}
+  );
+};

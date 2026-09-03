@@ -1,7 +1,6 @@
 import type { Product } from '../../types/product'
 import { useCartStore } from '../../store/cartStore'
 import { formatCurrency } from '../../utils/cartCalculations'
-import { useNavigate } from 'react-router-dom'
 interface ProductCardProps {
   product: Product
 }
@@ -9,7 +8,6 @@ interface ProductCardProps {
 export const ProductCard = ({
   product,
 }: ProductCardProps) => {
-  const navigate = useNavigate()
   const addToCart = useCartStore(
     (state) => state.addToCart,
   )

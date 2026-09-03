@@ -1,10 +1,10 @@
 interface PriceRangeSliderProps {
-  min: number
-  max: number
-  minValue: number
-  maxValue: number
-  onMinChange: (value: number) => void
-  onMaxChange: (value: number) => void
+  min: number;
+  max: number;
+  minValue: number;
+  maxValue: number;
+  onMinChange: (value: number) => void;
+  onMaxChange: (value: number) => void;
 }
 
 export const PriceRangeSlider = ({
@@ -15,58 +15,41 @@ export const PriceRangeSlider = ({
   onMinChange,
   onMaxChange,
 }: PriceRangeSliderProps) => {
-  const range = max - min
+  const range = max - min;
 
-  const minPercentage =
-    range === 0
-      ? 0
-      : ((minValue - min) / range) * 100
+  const minPercentage = range === 0 ? 0 : ((minValue - min) / range) * 100;
 
-  const maxPercentage =
-    range === 0
-      ? 100
-      : ((maxValue - min) / range) * 100
+  const maxPercentage = range === 0 ? 100 : ((maxValue - min) / range) * 100;
 
-  const handleMinChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const value = Number(event.target.value)
+  const handleMinChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(event.target.value);
 
     if (value <= maxValue) {
-      onMinChange(value)
+      onMinChange(value);
     }
-  }
+  };
 
-  const handleMaxChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const value = Number(event.target.value)
+  const handleMaxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(event.target.value);
 
     if (value >= minValue) {
-      onMaxChange(value)
+      onMaxChange(value);
     }
-  }
+  };
 
   return (
     <div className="w-full">
-      {/* Price values */}
       <div className="mb-2 flex items-center justify-between">
-        <span className="text-sm font-medium text-slate-700">
-          Price
-        </span>
+        <span className="text-sm font-medium text-slate-700">Price</span>
 
         <span className="text-sm font-semibold text-slate-900">
-          ${minValue.toFixed(2)} - $
-          {maxValue.toFixed(2)}
+          ${minValue.toFixed(2)} - ${maxValue.toFixed(2)}
         </span>
       </div>
 
-      {/* Slider */}
       <div className="relative h-6">
-        {/* Background track */}
         <div className="absolute top-1/2 h-1.5 w-full -translate-y-1/2 rounded-full bg-slate-200" />
 
-        {/* Selected range */}
         <div
           className="absolute top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-slate-900"
           style={{
@@ -75,7 +58,6 @@ export const PriceRangeSlider = ({
           }}
         />
 
-        {/* Minimum price slider */}
         <input
           type="range"
           min={min}
@@ -87,7 +69,6 @@ export const PriceRangeSlider = ({
           aria-label="Minimum price"
         />
 
-        {/* Maximum price slider */}
         <input
           type="range"
           min={min}
@@ -100,11 +81,10 @@ export const PriceRangeSlider = ({
         />
       </div>
 
-      {/* Min / Max labels */}
       <div className="mt-1 flex justify-between text-xs text-slate-500">
         <span>${min.toFixed(2)}</span>
         <span>${max.toFixed(2)}</span>
       </div>
     </div>
-  )
-}
+  );
+};
