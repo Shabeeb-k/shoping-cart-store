@@ -9,7 +9,6 @@ interface ProductsPageProps {
 }
 
 export const ProductsPage = ({
-  onCheckout,
   onProductClick,
 }: ProductsPageProps) => {
   const { data, isLoading, isError, error, refetch } = useProducts();
