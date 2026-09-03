@@ -2,18 +2,24 @@ import { ProductFilters } from "../components/products/ProductFilters";
 import { ProductGrid } from "../components/products/productGrid";
 import { useProductFilters } from "../hooks/useProductFilters";
 import { useProducts } from "../hooks/useProducts";
-
+import type { Product } from "../types/product";
 interface ProductsPageProps {
   onCheckout: () => void;
+  onProductClick: (product: Product) => void;
 }
 
-export const ProductsPage = ({}: ProductsPageProps) => {
+export const ProductsPage = ({
+  onCheckout,
+  onProductClick,
+}: ProductsPageProps) => {
   const { data, isLoading, isError, error, refetch } = useProducts();
 
   const products = data?.products ?? [];
 
   const {
     searchTerm,
+    sortBy,
+    setSortBy,
     category,
     minPrice,
     maxPrice,
@@ -85,12 +91,12 @@ export const ProductsPage = ({}: ProductsPageProps) => {
             Online store
           </p>
 
-          <h1 className="mt-1 text-3xl font-bold tracking-tight text-slate-900">
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
             Discover products
           </h1>
 
-          <p className="mt-2 text-slate-500">
-            Browse our collection and add your favourites to the cart.
+          <p className="mt-2 text-slate-500 dark:text-slate-400">
+            Browse our collection and find something you love.
           </p>
         </div>
         {/* 
@@ -110,10 +116,12 @@ export const ProductsPage = ({}: ProductsPageProps) => {
         maxPrice={maxPrice}
         priceRange={priceRange}
         categories={categories}
+        sortBy={sortBy}
         onSearchChange={setSearchTerm}
         onCategoryChange={setCategory}
         onMinPriceChange={setMinPrice}
         onMaxPriceChange={setMaxPrice}
+        onSortChange={setSortBy}
         onClear={clearFilters}
       />
 
@@ -127,7 +135,10 @@ export const ProductsPage = ({}: ProductsPageProps) => {
         </p>
       </div>
 
-      <ProductGrid products={filteredProducts} />
+      <ProductGrid
+        products={filteredProducts}
+        onProductClick={onProductClick}
+      />
     </main>
   );
 };

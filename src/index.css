@@ -3,11 +3,17 @@
 * {
   box-sizing: border-box;
 }
+:root {
+  color-scheme: light;
+}
 
+.dark {
+  color-scheme: dark;
+}
 html {
   scroll-behavior: smooth;
 }
-
+@custom-variant dark (&:where(.dark, .dark *));
 body {
   margin: 0;
   min-width: 320px;

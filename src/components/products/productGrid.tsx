@@ -1,12 +1,14 @@
-import type { Product } from '../../types/product'
-import { ProductCard } from './ProductCard'
+import type { Product } from "../../types/product";
+import { ProductCard } from "./ProductCard";
 
 interface ProductGridProps {
-  products: Product[]
+  products: Product[];
+  onProductClick?: (product: Product) => void;
 }
 
 export const ProductGrid = ({
   products,
+  onProductClick,
 }: ProductGridProps) => {
   if (products.length === 0) {
     return (
@@ -19,7 +21,7 @@ export const ProductGrid = ({
           Try changing your search or filters.
         </p>
       </div>
-    )
+    );
   }
 
   return (
@@ -28,8 +30,11 @@ export const ProductGrid = ({
         <ProductCard
           key={product.id}
           product={product}
+          onProductClick={() =>
+            onProductClick?.(product)
+          }
         />
       ))}
     </div>
-  )
-}
+  );
+};
